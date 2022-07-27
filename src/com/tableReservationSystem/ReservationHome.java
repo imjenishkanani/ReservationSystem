@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.util.Scanner;
 import com.tableReservationSystem.Reservation;
 
+
 public class ReservationHome {
 	public static void main(String[] args) {
 
@@ -68,7 +69,7 @@ public class ReservationHome {
 					int flag3 = 1;
 					while (flag3 == 1) {
 						System.out.println("Enter Reservation Id : ");
-						int did = input.nextInt();
+						int did = new Scanner(System.in).nextInt();
 						int deleteReservationRes = obj.deleteReservationById(did);
 
 						if (deleteReservationRes == 1) {
@@ -83,7 +84,7 @@ public class ReservationHome {
 					int flag4 = 1;
 					while (flag4 == 1) {
 						System.out.println("Enter Reservation Id : ");
-						int resId = input.nextInt();
+						int resId = new Scanner(System.in).nextInt();
 
 						int confirmReservationRes = obj.confirmedResById(resId);
 
@@ -101,7 +102,7 @@ public class ReservationHome {
 					int flag5 = 1;
 					while (flag5 == 1) {
 						System.out.println("Enter Reservation Id : ");
-						int cancelResId = input.nextInt();
+						int cancelResId = new Scanner(System.in).nextInt();
 
 						int cancelReservationRes = obj.cancelResById(cancelResId);
 

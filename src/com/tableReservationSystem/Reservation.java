@@ -1,7 +1,8 @@
 package com.tableReservationSystem;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Reservation {
+public class Reservation implements Serializable{
 
 	private int reservationId;
 	private String customerName, reservationDes, status;
@@ -36,7 +37,7 @@ public class Reservation {
 		this.taxAmount = taxAmount;
 		this.totalAmount = totalAmount;
 	}
-
+	
 	public String toString() {
 		return reservationId + "," + 
 				customerName + "," + 

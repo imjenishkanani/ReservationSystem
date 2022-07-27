@@ -1,22 +1,119 @@
 package com.tableReservationSystem;
 
 import java.io.File;
+
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Scanner;
 
+//class Th1 extends Thread {
+//		ArrayList<Reservation> tempList1 = new ArrayList<Reservation>();
+//		
+//		
+////		cleanReportFile();
+////		for (int i = 0; i < mList.size(); i++) {
+////
+////			fw.write(mList.get(i) + "");
+////			fw.write("\n");
+////		}
+////		fw.close();
+//		//public Th1() {};
+////		public Th1()
+////		{}
+//		Th1(){
+//			
+//		}
+//		public Th1(ArrayList<Reservation> exportAllList) {
+//			
+//			
+//			for(int i=0; i<exportAllList.size(); i++)
+//			{
+//				tempList1.add(exportAllList.get(i));
+//				
+//			}
+//		}
+//		
+//		public void run() {
+//			try {
+//			FileWriter fw = new FileWriter("C:/Users/Jenish Kanani/Desktop/AllReportFile.txt", true);
+//			for(int i=0; i<tempList1.size()/2; i++)
+//			{
+//				
+//				fw.write(tempList1.get(i) + "");
+//				fw.write("\n");
+//			
+//				Thread.sleep(1000); 
+//				
+//			}
+//			fw.close();
+//			
+////			System.out.println("--------------------------------------------------------");
+////			System.out.println("Export All Reservation Report Genrated Successfully...");
+////			System.out.println("--------------------------------------------------------");
+//		} catch(Exception e) {
+//			System.out.println(e);
+//		};
+//}
+//
+//class Th2 extends Thread {
+//	ArrayList<Reservation> tempList2 = new ArrayList<Reservation>();
+//	
+//	
+////	cleanReportFile();
+////	for (int i = 0; i < mList.size(); i++) {
+////
+////		fw.write(mList.get(i) + "");
+////		fw.write("\n");
+////	}
+////	fw.close();
+//	public Th2(ArrayList<Reservation> exportAllList) {
+//		for(int i=exportAllList.size(); i<exportAllList.size(); i++)
+//		{
+//			tempList2.add(exportAllList.get(i));
+//			
+//		}
+//	}
+//	
+//	public void run() {
+//		try {
+//		FileWriter fw = new FileWriter("C:/Users/Jenish Kanani/Desktop/AllReportFile.txt", true);
+//		for(int i=0; i<tempList2.size()/2; i++)
+//		{
+//			fw.write(tempList2.get(i) + "");
+//			fw.write("\n");
+//			
+//			Thread.sleep(1000);
+//			
+//		}
+//		fw.close();
+//		} catch(Exception e) {
+//			System.out.println(e);
+//		}
+////		System.out.println("--------------------------------------------------------");
+////		System.out.println("Export All Reservation Report Genrated Successfully...");
+////		System.out.println("--------------------------------------------------------");
+//	}
+//}
+
 public class ReservationHelper implements ReservationMethods {
 
 	private static ArrayList<Reservation> mList = new ArrayList<>();
 	private static final String ReservationfilePath = "C:/Users/Jenish Kanani/Desktop/Reservation.txt";
+
+	// added today
+	// public Th1 getTh1() {
+	// return new Th1();
+	// }
+	// end
 
 	public ReservationHelper() {
 	};
@@ -139,6 +236,7 @@ public class ReservationHelper implements ReservationMethods {
 				}
 
 				LocalDateTime reservationDate = LocalDateTime.now();
+
 				int reservationId = genrateId(reservationDate);
 				int adult = 0;
 				int children = 0;
@@ -235,13 +333,13 @@ public class ReservationHelper implements ReservationMethods {
 
 	@Override
 	public void viewReservations() {
-		
+
 		try {
 			if (!mList.isEmpty()) {
 //				System.out.println("Reservation Id|" + " Name         |" + "   Discription      |"
 //						+ " Reservation Date           |" + "Adult|" + " Children|" + " Sub Total   |"
 //						+ " Tax Amount   |" + "Total amount   |" + "    Status ");
-				
+
 				for (int i = 0; i < mList.size(); i++) {
 					System.out.print(mList.get(i).getReservationId() + "  ");
 					System.out.print(mList.get(i).getCustomerName() + "  ");
@@ -254,7 +352,7 @@ public class ReservationHelper implements ReservationMethods {
 					System.out.print(mList.get(i).getTaxAmount() + "  ");
 					System.out.print(mList.get(i).getTotalAmount() + "  ");
 					System.out.print(mList.get(i).getStatus() + "  " + "\n");
-				
+
 				}
 			} else {
 				System.out.println("\n>>>>>>>>>> No Reservation Available!! <<<<<<<<<<\n");
@@ -273,6 +371,9 @@ public class ReservationHelper implements ReservationMethods {
 				for (int i = 0; i < mList.size(); i++) {
 					if (mList.get(i).getReservationId() == id) {
 
+						DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+						String formatedDateTime = mList.get(i).getReservationDate().format(format);
+
 						System.out.println(
 								"\n------------------------------------------------------------------------------------------------------");
 						System.out.println("Reservation Deatils:");
@@ -282,6 +383,8 @@ public class ReservationHelper implements ReservationMethods {
 						System.out.println("Name :" + mList.get(i).getCustomerName());
 						System.out.println("ReservationId :" + mList.get(i).getReservationId());
 						System.out.println("ReservationDesc :" + mList.get(i).getReservationDes());
+						// System.out.println("ReservationDate :" + mList.get(i).getReservationDate());
+						System.out.println("ReservationDate :" + formatedDateTime);
 						System.out.println("NoOfAdult :" + mList.get(i).getAdult());
 						System.out.println("NoOfChildren :" + mList.get(i).getChildren());
 						System.out.println("SubTotal :" + mList.get(i).getSubTotalAmount());
@@ -743,7 +846,7 @@ public class ReservationHelper implements ReservationMethods {
 			e.printStackTrace();
 		}
 	}
-	
+
 //	public static void cleanReportFileThread() {
 //		try {
 //
@@ -754,8 +857,7 @@ public class ReservationHelper implements ReservationMethods {
 //			e.printStackTrace();
 //		}
 //	}
-	
-	
+
 //	public static void writeReportFileThread() {
 //		
 //		try {
@@ -795,10 +897,8 @@ public class ReservationHelper implements ReservationMethods {
 		}
 		return path;
 	}
-	
-	// methods for threads report gernration.
-	public void bookedStatusReport()
-	{
+
+	public void bookedStatusReport() {
 		ArrayList<Reservation> bookedTempList = new ArrayList<>();
 		for (int i = 0; i < mList.size(); i++) {
 			if (mList.get(i).getStatus().equalsIgnoreCase("Booked")) {
@@ -830,9 +930,8 @@ public class ReservationHelper implements ReservationMethods {
 		System.out.println("---------------------------------------------------------------");
 
 	}
-	
-	public void cancelledStatusReport()
-	{
+
+	public void cancelledStatusReport() {
 		ArrayList<Reservation> cancelledTempList = new ArrayList<>();
 		for (int i = 0; i < mList.size(); i++) {
 			if (mList.get(i).getStatus().equalsIgnoreCase("Cancelled")) {
@@ -864,9 +963,8 @@ public class ReservationHelper implements ReservationMethods {
 		System.out.println("---------------------------------------------------------------");
 
 	}
-	
-	public void confirmedStatusReport()
-	{
+
+	public void confirmedStatusReport() {
 		ArrayList<Reservation> confirmTempList = new ArrayList<>();
 		for (int i = 0; i < mList.size(); i++) {
 			if (mList.get(i).getStatus().equalsIgnoreCase("Confirmed")) {
@@ -898,8 +996,7 @@ public class ReservationHelper implements ReservationMethods {
 		System.out.println("---------------------------------------------------------------");
 
 	}
-	
-	
+
 	public void exportByStatus() {
 		int choice;
 		Scanner input = new Scanner(System.in);
@@ -916,101 +1013,12 @@ public class ReservationHelper implements ReservationMethods {
 
 			switch (choice) {
 			case 1:
-//				ArrayList<Reservation> bookedTempList = new ArrayList<>();
-//				for (int i = 0; i < mList.size(); i++) {
-//					if (mList.get(i).getStatus().equalsIgnoreCase("Booked")) {
-//						bookedTempList.add(mList.get(i));
-//					}
-//				}
-//
-//				if (bookedTempList.size() > 0) {
-//					try {
-//						FileWriter fw = new FileWriter(genrateFileName(), true);
-//
-//						for (int i = 0; i < bookedTempList.size(); i++) {
-//							fw.write(bookedTempList.get(i) + "	");
-//							fw.write("\n");
-//						}
-//
-//						fw.close();
-//					} catch (IOException ex) {
-//						ex.printStackTrace();
-//						System.out.println("Can not write to File!!");
-//					}
-//				} else {
-//					System.out.println("No Reservation found with Booked status..");
-//					return;
-//				}
-//
-//				System.out.println("--------------------------------------------------------------");
-//				System.out.println("Reservation Report of Booked status Genrated Successfully...");
-//				System.out.println("---------------------------------------------------------------");
 				bookedStatusReport();
 				break;
 			case 2:
-
-//				ArrayList<Reservation> cancelledTempList = new ArrayList<>();
-//				for (int i = 0; i < mList.size(); i++) {
-//					if (mList.get(i).getStatus().equalsIgnoreCase("Cancelled")) {
-//						cancelledTempList.add(mList.get(i));
-//					}
-//				}
-//
-//				if (cancelledTempList.size() > 0) {
-//					try {
-//						FileWriter fw = new FileWriter(genrateFileName(), true);
-//
-//						for (int i = 0; i < cancelledTempList.size(); i++) {
-//							fw.write(cancelledTempList.get(i) + "	");
-//							fw.write("\n");
-//						}
-//
-//						fw.close();
-//					} catch (IOException ex) {
-//						ex.printStackTrace();
-//						System.out.println("Can not write to File!!");
-//					}
-//				} else {
-//					System.out.println("No Reservation found with Cancelled status..");
-//					return;
-//				}
-//
-//				System.out.println("--------------------------------------------------------------");
-//				System.out.println("Reservation Report of Cancelled status Genrated Successfully...");
-//				System.out.println("---------------------------------------------------------------");
 				cancelledStatusReport();
 				break;
 			case 3:
-
-//				ArrayList<Reservation> confirmTempList = new ArrayList<>();
-//				for (int i = 0; i < mList.size(); i++) {
-//					if (mList.get(i).getStatus().equalsIgnoreCase("Confirmed")) {
-//						confirmTempList.add(mList.get(i));
-//					}
-//				}
-//
-//				if (confirmTempList.size() > 0) {
-//					try {
-//						FileWriter fw = new FileWriter(genrateFileName(), true);
-//
-//						for (int i = 0; i < confirmTempList.size(); i++) {
-//							fw.write(confirmTempList.get(i) + "	");
-//							fw.write("\n");
-//						}
-//
-//						fw.close();
-//					} catch (IOException ex) {
-//						ex.printStackTrace();
-//						System.out.println("Can not write to File!!");
-//					}
-//				} else {
-//					System.out.println("No Reservation found with Confirmed status..");
-//					return;
-//				}
-//
-//				System.out.println("--------------------------------------------------------------");
-//				System.out.println("Reservation Report of Confirmed status Genrated Successfully...");
-//				System.out.println("---------------------------------------------------------------");
 				confirmedStatusReport();
 				break;
 			case 0:
@@ -1037,20 +1045,34 @@ public class ReservationHelper implements ReservationMethods {
 			ch = input.nextInt();
 			switch (ch) {
 			case 1:
-
-				try {
-					FileWriter fw = new FileWriter("C:/Users/Jenish Kanani/Desktop/AllReportFile.txt", true);
-					cleanReportFile();
-					for (int i = 0; i < mList.size(); i++) {
-
-						fw.write(mList.get(i) + "");
-						fw.write("\n");
-					}
-					fw.close();
-					//writeReportFile();
-				} catch (IOException e) {
-					System.out.println("File not found!!");
+				// thread part start
+				ArrayList<Reservation> exportAllList = new ArrayList<Reservation>();
+				for(int i=0; i<mList.size(); i++)
+				{
+					exportAllList.add(mList.get(i));
 				}
+				
+				cleanReportFile();
+				
+				Runnable obj1 = new Th1(exportAllList);
+				Runnable obj2 = new Th1(exportAllList);
+				
+				Thread objt1 = new Thread(obj1);
+				Thread objt2 = new Thread(obj2);
+				
+				System.out.println("Starting to writing in file...");
+				objt1.start();
+				
+				System.out.println("Wait still writing... ");
+				try {
+					Thread.sleep(1000);
+				} catch(Exception e) {
+					System.out.println(e);
+				}		
+				objt2.start();
+				System.out.println("Finished writing.");
+				// end
+
 				System.out.println("--------------------------------------------------------");
 				System.out.println("Export All Reservation Report Genrated Successfully...");
 				System.out.println("--------------------------------------------------------");
@@ -1064,6 +1086,49 @@ public class ReservationHelper implements ReservationMethods {
 			default:
 				System.out.println("\nPlease Enter valid choice!!\n");
 				break;
+			}
+		}
+	}
+
+	// innerclass for thread start.
+	class Th1 implements Runnable {
+		ArrayList<Reservation> tempList1 = new ArrayList<Reservation>();
+		Th1() {
+
+		}
+
+		public Th1(ArrayList<Reservation> exportAllList) {
+
+			for (int i = 0; i < exportAllList.size(); i++) {
+				tempList1.add(exportAllList.get(i));
+
+			}
+		}
+
+		public void run() {
+			try {
+				System.out.println("Th1 working...");
+				FileWriter fw = new FileWriter("C:/Users/Jenish Kanani/Desktop/AllReportFile.txt", true);
+				for (int i = 0; i < tempList1.size() / 2; i++) {
+
+					fw.write(tempList1.get(i) + "");
+					fw.write("\n");
+
+					Thread.sleep(1000);
+
+				}
+				
+				for (int j = tempList1.size() / 2; j < tempList1.size(); j++) {
+					fw.write(tempList1.get(j) + "");
+					fw.write("\n");
+
+					Thread.sleep(1000);
+
+				}
+				fw.close();
+
+			} catch (Exception e) {
+				System.out.println(e);
 			}
 		}
 	}

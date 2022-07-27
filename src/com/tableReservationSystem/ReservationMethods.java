@@ -1,7 +1,6 @@
 package com.tableReservationSystem;
 
 public interface ReservationMethods {
-
 	public void createReservation();
 	public void viewReservations();
 	public int viewReservations(int id);
